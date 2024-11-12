@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+</head>
+
+<style>
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.glass {
+  width: 300px;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(185, 179, 179, 0.1); /* Semi-transparent white */
+  box-shadow: 0 8px 32px rgba(207, 28, 28, 0.25); /* Soft shadow */
+  backdrop-filter: blur(10px); /* Blurring background */
+  border: 1px solid rgba(255, 255, 255, 0.18); /* Light inner border */
+  /* text-align: center; */
+  color: #5f3e3e;
+  font-family: Arial, sans-serif;
+}
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    th {
+        padding: 4px;
+    }
+
+    td {
+
+        padding: 5px;
+    }
+
+    table,
+    td,
+    th {
+        border-collapse: collapse;
+        border: 2px solid;
+
+    }
+
+    table {
+        background-color: rgb(245, 239, 239);
+        width: 100%;
+    }
+
+    .box {
+        width: 80vw;
+        min-height: 80vh;
+        margin: auto;
+        padding: 20px;
+
+        background-color: rgba(255, 255, 255, 0.479);
+
+    }
+
+    h1 {
+        padding: 20px;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    input {
+        border-radius: 1px;
+        margin: 10px 0px;
+        padding: 5px;
+    }
+
+    .submit {
+font-weight: bolder;
+font-size: large;
+border: none;
+        cursor: pointer;
+    }
+
+    .Registered{
+        width: 77vw;
+        height: 20vh;
+        overflow-y: scroll;
+padding: 0px 14px;
+margin: auto;
+         
+    }
+    .head{
+
+        position: sticky;
+        top: 0;
+        background-color: rgb(188, 217, 243);
+    }
+</style>
+
+<body style="background-color: rgb(250, 239, 239);">
+    <div class="box glass">
+
+
+        <h1>Registeration form</h1>
+
+        <form id="dataForm">
+            <label for=""> Name: </label>
+            <br>
+            <input type="text" id="name" autofocus autocomplete="additional-name ds" style="  width: 100%;" required>
+            <br>
+            <label for=""> Email: </label>
+            <br>
+            <input type="email" id="email" style="  width: 100%;" required> <br>
+            <label for=""> Phone: </label>
+            <br>
+            <input type="number" id="phone" style="  width: 100%;" required>
+            <br>
+        </form>
+        <input class="submit" type="submit" onclick="addData()"
+            style=" background-color: rgba(78, 202, 78, 0.767);  border-radius: 3px; width: 101%;">
+            
+            
+            
+            <h1>
+                Registered Users
+            </h1>
+            
+            <div class="Registered">
+    
+    <table id="myTable">
+        <tr class="head">
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+            
+        </tr>
+        
+        
+        <tr>
+            
+                <td>
+                    
+                    JONE DOE
+                </td>
+
+                
+                <td>
+                    
+                    jonedoe@example.com
+                </td>
+                <td>
+                    
+                    123-456-7890
+                </td>
+            </tr>
+            
+            
+        </div>
+        </table>
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', loadTableData);
+        function addData() {
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            // Get existing data from localStorage or initialize an empty array
+            let tableData = JSON.parse(localStorage.getItem('tableData')) || [];
+
+            // Add new data to the array
+            tableData.push({ name, email, phone });
+
+            // Save updated data back to localStorage
+            localStorage.setItem('tableData', JSON.stringify(tableData));
+
+            // Add the new row to the table
+            appendRowToTable(name, email, phone);
+
+            // Clear the form inputs
+            document.getElementById('dataForm').reset();
+        }
+
+        function appendRowToTable(name, email, phone) {
+            // Get table body
+            const tableBody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+
+            // Create a new row
+            const newRow = tableBody.insertRow();
+
+            // Insert new cells and set their content
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            const cell3 = newRow.insertCell(2);
+
+            cell1.textContent = name;
+            cell2.textContent = email;
+            cell3.textContent = phone;
+        }
+            function loadTableData() {
+      // Get data from localStorage
+      const tableData = JSON.parse(localStorage.getItem('tableData')) || [];
+
+      // Populate the table with the saved data
+      tableData.forEach(row => {
+        appendRowToTable(row.name, row.email, row.phone);
+      });
+    }
+    </script>
+</body>
+
+</html>
